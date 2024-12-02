@@ -1,0 +1,4 @@
+.ssh/config
+.ssh/id_ed25519_github2
+node_modules/*
+.env

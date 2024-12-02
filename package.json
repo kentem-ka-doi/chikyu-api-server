@@ -1,0 +1,21 @@
+{
+  "name": "chikyu-api-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "chikyu-sdk": "git+ssh://git@github.com/kentem-ka-doi/chikyu-sdk-nodejs.git",
+    "express": "^4.21.1"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev --respawn src/server.ts"
+  },
+  "devDependencies": {
+    "@types/body-parser": "^1.19.5",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.1"
+  }
+}

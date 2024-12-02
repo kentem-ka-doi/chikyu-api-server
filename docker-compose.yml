@@ -1,0 +1,12 @@
+services:
+  chikyu-api-server:
+    container_name: chikyu-api-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${PORT:-3000}:3000
+    environment:
+      TOKEN_NAME: ${TOKEN_NAME}
+      TOKEN: ${TOKEN}
+      SECRET_TOKEN: ${SECRET_TOKEN}
