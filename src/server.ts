@@ -4,7 +4,8 @@ import Chikyu from "chikyu-sdk";
 
 const organizationId: number = Number(process.env.ORGANIZATION_ID) || 10794;
 
-const fetchCompanyByKentemId = async (kentemId: string) => {
+// 共通の会社情報取得関数
+const fetchCompany = async (key: string, fieldName: string) => {
   const collectionName: string = "companies";
   try {
     // ログイン
@@ -21,94 +22,50 @@ const fetchCompanyByKentemId = async (kentemId: string) => {
     const data = await Chikyu.secure.invoke(
       `/entity/${collectionName}/single`,
       {
-        key: kentemId,
+        key,
         key_search_option: {
-          input_field_name: "kentem_id",
+          input_field_name: fieldName,
           input_method: "by_field_value",
         },
       }
     );
     return data;
   } catch (error) {
-    console.error("Error in fetchCompanyByKentemId:", error);
+    console.error(`Error in fetchCompany (${fieldName}):`, error);
     throw error;
   }
 };
 
-const fetchCompanyByShokonCode = async (shokonCode: string) => {
-  const collectionName: string = "companies";
-  try {
-    // ログイン
-    await Chikyu.session.login(
-      process.env.TOKEN_NAME || "",
-      process.env.TOKEN || "",
-      process.env.SECRET_TOKEN || ""
-    );
+// 共通のAPIハンドラー
+const handleFetchCompany = (fieldName: string) => {
+  return async (req: Request, res: Response): Promise<void> => {
+    const key = req.params[fieldName];
 
-    // 組織変更
-    await Chikyu.session.changeOrgan(organizationId);
+    if (!key) {
+      res.status(400).json({ error: `${fieldName} parameter is required` });
+      return;
+    }
 
-    // データ取得
-    const data = await Chikyu.secure.invoke(
-      `/entity/${collectionName}/single`,
-      {
-        key: shokonCode,
-        key_search_option: {
-          input_field_name: "shokon_code",
-          input_method: "by_field_value",
-        },
-      }
-    );
-    return data;
-  } catch (error) {
-    console.error("Error in fetchCompanyByShokonCode:", error);
-    throw error;
-  }
+    try {
+      const result = await fetchCompany(key, fieldName);
+      console.log(result);
+      res.json(result);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Error processing your request" });
+    }
+  };
 };
 
+// Expressアプリケーション設定
 const app = express();
 app.use(bodyParser.json());
 
+// エンドポイント設定
+app.get("/api/v1/companies/:kentem_id", handleFetchCompany("kentem_id"));
 app.get(
-  "/api/v1/companies/:kentemId",
-  async (req: Request, res: Response): Promise<void> => {
-    const { kentemId } = req.params;
-
-    if (!kentemId) {
-      res.status(400).json({ error: "kentem-id parameter is required" });
-      return;
-    }
-
-    try {
-      const result = await fetchCompanyByKentemId(kentemId);
-      console.log(result);
-      res.json(result);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Error processing your request" });
-    }
-  }
-);
-
-app.get(
-  "/api/v1/companies/shokon-code/:shokonCode",
-  async (req: Request, res: Response): Promise<void> => {
-    const { shokonCode } = req.params;
-
-    if (!shokonCode) {
-      res.status(400).json({ error: "shokon-code parameter is required" });
-      return;
-    }
-
-    try {
-      const result = await fetchCompanyByShokonCode(shokonCode);
-      console.log(result);
-      res.json(result);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Error processing your request" });
-    }
-  }
+  "/api/v1/companies/shokon-code/:shokon_code",
+  handleFetchCompany("shokon_code")
 );
 
 // サーバー起動
