@@ -18,6 +18,7 @@ const fetchCompany = async (key: string, fieldName: string) => {
           input_field_name: fieldName,
           input_method: "by_field_value",
         },
+        is_async: true,
       }
     );
     return data;
