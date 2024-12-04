@@ -23,12 +23,13 @@ export const fetchData = async (
 };
 
 // Function to create an API handler
-export const createHandler = (
-  collectionName: string,
-  method: string,
-  paramHandler: (req: Request) => Record<string, any>
-) => {
-  return async (req: Request, res: Response): Promise<void> => {
+export const createHandler =
+  (
+    collectionName: string,
+    method: string,
+    paramHandler: (req: Request) => Record<string, any>
+  ) =>
+  async (req: Request, res: Response): Promise<void> => {
     try {
       const params = paramHandler(req);
       const is_async = req.method === "GET";
@@ -40,14 +41,14 @@ export const createHandler = (
       res.status(500).json({ error: errorMessage });
     }
   };
-};
 
 // PATCH handler for updating by a specific field
-export const patchByFieldHandler = (
-  collectionName: string, // API のコレクション名
-  idFieldName: string // ID を取得するためのフィールド名 (例: kentem_id, shokon_code)
-) => {
-  return async (req: Request, res: Response): Promise<void> => {
+export const patchByFieldHandler =
+  (
+    collectionName: string, // API のコレクション名
+    idFieldName: string // ID を取得するためのフィールド名 (例: kentem_id, shokon_code)
+  ) =>
+  async (req: Request, res: Response): Promise<void> => {
     try {
       // Step 1: Fetch internal ID using idFieldName
       const fieldValue = req.params[idFieldName];
@@ -65,11 +66,9 @@ export const patchByFieldHandler = (
 
       const key = fetchResult?._id; // 内部 ID を取得
       if (!key) {
-        res
-          .status(404)
-          .json({
-            error: `${collectionName} not found for the provided ${idFieldName}`,
-          });
+        res.status(404).json({
+          error: `${collectionName} not found for the provided ${idFieldName}`,
+        });
         return;
       }
 
@@ -90,7 +89,6 @@ export const patchByFieldHandler = (
       res.status(500).json({ error: errorMessage });
     }
   };
-};
 
 // Function to get error message from an error object
 export const getErrorMessage = (error: unknown): string => {
