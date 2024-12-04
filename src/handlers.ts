@@ -3,45 +3,6 @@ import { Request, Response } from "express";
 import Chikyu from "chikyu-sdk";
 import { getSession } from "./session";
 
-// Function to fetch data from Chikyu
-export const fetchData = async (
-  collectionName: string,
-  method: string,
-  params: Record<string, any>,
-  is_async: boolean = false
-) => {
-  try {
-    await getSession();
-    return await Chikyu.secure.invoke(`/entity/${collectionName}/${method}`, {
-      ...params,
-      is_async,
-    });
-  } catch (error) {
-    console.error(`Error in fetchData (${collectionName}):`, error);
-    throw error;
-  }
-};
-
-// Function to create an API handler
-export const createHandler =
-  (
-    collectionName: string,
-    method: string,
-    paramHandler: (req: Request) => Record<string, any>
-  ) =>
-  async (req: Request, res: Response): Promise<void> => {
-    try {
-      const params = paramHandler(req);
-      const is_async = req.method === "GET";
-      const result = await fetchData(collectionName, method, params, is_async);
-      res.json(result);
-    } catch (error) {
-      console.error(error);
-      const errorMessage = getErrorMessage(error);
-      res.status(500).json({ error: errorMessage });
-    }
-  };
-
 // PATCH handler for updating by a specific field
 export const patchByFieldHandler =
   (
@@ -90,18 +51,8 @@ export const patchByFieldHandler =
     }
   };
 
-// Function to get error message from an error object
-export const getErrorMessage = (error: unknown): string => {
-  if (error instanceof Error) {
-    return error.stack ? error.stack.split("\n")[0] : error.message;
-  } else if (typeof error === "string") {
-    return error;
-  }
-  return "Error processing your request";
-};
-
 // Parameter processing functions
-export const getKeySearchParams = (fieldName: string) => (req: Request) => {
+const getKeySearchParams = (fieldName: string) => (req: Request) => {
   const key = req.params[fieldName];
   if (!key) throw new Error(`${fieldName} parameter is required`);
   return {
@@ -112,6 +63,53 @@ export const getKeySearchParams = (fieldName: string) => (req: Request) => {
     },
   };
 };
+
+// Function to get error message from an error object
+const getErrorMessage = (error: unknown): string => {
+  if (error instanceof Error) {
+    return error.stack ? error.stack.split("\n")[0] : error.message;
+  } else if (typeof error === "string") {
+    return error;
+  }
+  return "Error processing your request";
+};
+
+// Function to fetch data from Chikyu
+const fetchData = async (
+  collectionName: string,
+  method: string,
+  params: Record<string, any>,
+  is_async: boolean = false
+) => {
+  try {
+    await getSession();
+    return await Chikyu.secure.invoke(`/entity/${collectionName}/${method}`, {
+      ...params,
+      is_async,
+    });
+  } catch (error) {
+    console.error(`Error in fetchData (${collectionName}):`, error);
+    throw error;
+  }
+};
+
+// Function to create an API handler
+export const createHandler =
+  (collectionName: string) =>
+  (method: string) =>
+  (paramHandler: (req: Request) => Record<string, any>) =>
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      const params = paramHandler(req);
+      const is_async = req.method === "GET";
+      const result = await fetchData(collectionName, method, params, is_async);
+      res.json(result);
+    } catch (error) {
+      console.error(error);
+      const errorMessage = getErrorMessage(error);
+      res.status(500).json({ error: errorMessage });
+    }
+  };
 
 export const getListParams = (req: Request) => {
   const items_per_page = parseInt(req.query.items_per_page as string, 10) || 10;
@@ -125,3 +123,7 @@ export const updateParams = (key: string) => (req: Request) => ({
   key,
   fields: { ...req.body },
 });
+
+// Generic function to generate single GET handler
+export const generateSingleHandler = (handler: any, key: string) =>
+  handler("single")(getKeySearchParams(key));
