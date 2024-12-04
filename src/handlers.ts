@@ -26,12 +26,12 @@ export const fetchData = async (
 export const createHandler = (
   collectionName: string,
   method: string,
-  paramHandler: (req: Request) => Record<string, any>,
-  is_async: boolean = false
+  paramHandler: (req: Request) => Record<string, any>
 ) => {
   return async (req: Request, res: Response): Promise<void> => {
     try {
       const params = paramHandler(req);
+      const is_async = req.method === "GET";
       const result = await fetchData(collectionName, method, params, is_async);
       res.json(result);
     } catch (error) {

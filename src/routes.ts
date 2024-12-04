@@ -11,16 +11,11 @@ import {
 export const defineEndpoints = (app: Application): void => {
   app.get(
     "/api/v1/companies/:kentem_id",
-    createHandler("companies", "single", getKeySearchParams("kentem_id"), true)
+    createHandler("companies", "single", getKeySearchParams("kentem_id"))
   );
   app.get(
     "/api/v1/companies/shokon-code/:shokon_code",
-    createHandler(
-      "companies",
-      "single",
-      getKeySearchParams("shokon_code"),
-      true
-    )
+    createHandler("companies", "single", getKeySearchParams("shokon_code"))
   );
   app.get(
     "/api/v1/companies",
