@@ -2,6 +2,7 @@
 import { Application } from "express";
 import {
   createHandler,
+  patchByFieldHandler,
   getKeySearchParams,
   getListParams,
   createParams,
@@ -29,6 +30,14 @@ export const defineEndpoints = (app: Application): void => {
   app.patch(
     "/api/v1/companies/id/:key",
     createHandler("companies", "save", updateParams("key"))
+  );
+  app.patch(
+    "/api/v1/companies/:kentem_id",
+    patchByFieldHandler("companies", "kentem_id")
+  );
+  app.patch(
+    "/api/v1/companies/shokon-code/:shokon_code",
+    patchByFieldHandler("companies", "shokon_code")
   );
 
   app.get(

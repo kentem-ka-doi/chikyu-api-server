@@ -42,6 +42,56 @@ export const createHandler = (
   };
 };
 
+// PATCH handler for updating by a specific field
+export const patchByFieldHandler = (
+  collectionName: string, // API のコレクション名
+  idFieldName: string // ID を取得するためのフィールド名 (例: kentem_id, shokon_code)
+) => {
+  return async (req: Request, res: Response): Promise<void> => {
+    try {
+      // Step 1: Fetch internal ID using idFieldName
+      const fieldValue = req.params[idFieldName];
+      if (!fieldValue) {
+        res.status(400).json({ error: `${idFieldName} is required` });
+        return;
+      }
+
+      const searchParams = getKeySearchParams(idFieldName)(req);
+      const fetchResult = await fetchData(
+        collectionName,
+        "single",
+        searchParams
+      );
+
+      const key = fetchResult?._id; // 内部 ID を取得
+      if (!key) {
+        res
+          .status(404)
+          .json({
+            error: `${collectionName} not found for the provided ${idFieldName}`,
+          });
+        return;
+      }
+
+      // Step 2: Perform PATCH operation using the retrieved ID
+      const buildUpdateParams = updateParams(key);
+      const finalUpdateParams = buildUpdateParams(req);
+      const updateResult = await fetchData(
+        collectionName,
+        "save",
+        finalUpdateParams
+      );
+
+      // Respond with the updated result
+      res.json(updateResult);
+    } catch (error) {
+      console.error(error);
+      const errorMessage = getErrorMessage(error);
+      res.status(500).json({ error: errorMessage });
+    }
+  };
+};
+
 // Function to get error message from an error object
 export const getErrorMessage = (error: unknown): string => {
   if (error instanceof Error) {
