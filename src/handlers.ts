@@ -72,3 +72,8 @@ export const getListParams = (req: Request) => {
 };
 
 export const createParams = (req: Request) => ({ fields: { ...req.body } });
+
+export const updateParams = (key: string) => (req: Request) => ({
+  key,
+  fields: { ...req.body },
+});

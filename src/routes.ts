@@ -5,6 +5,7 @@ import {
   getKeySearchParams,
   getListParams,
   createParams,
+  updateParams,
 } from "./handlers";
 
 // Define API endpoints for the express application
@@ -24,6 +25,10 @@ export const defineEndpoints = (app: Application): void => {
   app.post(
     "/api/v1/companies",
     createHandler("companies", "create", createParams)
+  );
+  app.patch(
+    "/api/v1/companies/id/:key",
+    createHandler("companies", "save", updateParams("key"))
   );
 
   app.get(
