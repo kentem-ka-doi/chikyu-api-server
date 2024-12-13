@@ -5,8 +5,8 @@
 ## プロジェクト構造
 
 ```
-chikyu-api-server-copy/
-├── Dockerfile               # Dockerの設定ファイル
+chikyu-api-server/
+├── Dockerfile              # Dockerの設定ファイル
 ├── docker-compose.yml      # Docker Compose設定
 ├── package.json            # プロジェクトの依存関係とスクリプト
 ├── tsconfig.json           # TypeScriptの設定
