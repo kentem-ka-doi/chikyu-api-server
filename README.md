@@ -29,7 +29,7 @@ chikyu-api-server-copy/
 
    ```bash
    git clone <リポジトリのURL>
-   cd chikyu-api-server-copy
+   cd chikyu-api-server
    ```
 
 2. 必要なパッケージをインストールします。

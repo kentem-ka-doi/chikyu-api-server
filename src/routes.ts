@@ -15,6 +15,32 @@ export const defineEndpoints = (app: Application): void => {
   const businessDiscussionsHandler = createHandler("business_discussions");
 
   // Define routes for companies
+
+  /**
+   * @swagger
+   * /api/v1/companies:
+   *   get:
+   *     summary: 全企業のリストを取得
+   *     description: 登録されているすべての企業を返します。
+   *     responses:
+   *       200:
+   *         description: 正常に企業リストを取得
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: array
+   *               items:
+   *                 type: object
+   *                 properties:
+   *                   id:
+   *                     type: integer
+   *                     description: 企業ID
+   *                   name:
+   *                     type: string
+   *                     description: 企業名
+   *       500:
+   *         $ref: '#/components/responses/UnauthorizedError'
+   */
   app.get("/api/v1/companies", companiesHandler("list")(getListParams));
   app.post("/api/v1/companies", companiesHandler("create")(createParams));
 
@@ -42,6 +68,30 @@ export const defineEndpoints = (app: Application): void => {
   );
 
   // Define routes for business discussions
+
+  /**
+   * @swagger
+   * /api/v1/business_discussions:
+   *   get:
+   *     summary: ビジネス会議のリストを取得(作成中)
+   *     description: 登録されているすべてのビジネス会議を返します。
+   *     responses:
+   *       200:
+   *         description: 正常にビジネス会議リストを取得
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: array
+   *               items:
+   *                 type: object
+   *                 properties:
+   *                   id:
+   *                     type: integer
+   *                     description: ビジネス会議ID
+   *                   title:
+   *                     type: string
+   *                     description: ビジネス会議のタイトル
+   */
   app.get(
     "/api/v1/business-discussions",
     businessDiscussionsHandler("list")(getListParams)

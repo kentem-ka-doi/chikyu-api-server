@@ -2,10 +2,12 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { defineEndpoints } from "./routes";
+import { swaggerDocs, swaggerUi } from "./swagger";
 
 // Initialize express application
 const app = express();
 app.use(bodyParser.json());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Initialize API endpoints
 defineEndpoints(app);

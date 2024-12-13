@@ -6,7 +6,9 @@
     "esModuleInterop": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "typeRoots": ["node_modules/@types"],
+    "types": ["swagger-jsdoc", "swagger-ui-express"]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
