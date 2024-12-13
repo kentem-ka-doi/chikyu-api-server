@@ -8,6 +8,6 @@ services:
       - ${PORT:-3000}:3000
     environment:
       TOKEN_NAME: ${TOKEN_NAME}
-      TOKEN: ${TOKEN}
-      SECRET_TOKEN: ${SECRET_TOKEN}
+      EMAIL: ${EMAIL}
+      PASSWORD: ${PASSWORD}
       ORGANIZATION_ID: ${ORGANIZATION_ID:-10794}
