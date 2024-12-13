@@ -1,17 +1,21 @@
 Copyright (C) 2024 KENSETSU SYSTEM Co.Ltd.
 
-All rights reserved.
+Permission is hereby granted to use, modify, and distribute this software within the organization for both commercial and non-commercial purposes, provided that:
 
-This software is the confidential and proprietary information of KENSETSU SYSTEM Co.Ltd.("Confidential Information"). You shall not disclose such Confidential Information and shall use it only in accordance with the terms of the license agreement you entered into with KENSETSU SYSTEM Co.Ltd.
+1. The original copyright notice and this permission notice appear in all copies.
+2. Modifications are clearly documented.
+3. Redistribution outside the organization is strictly prohibited unless explicitly authorized by the copyright holder.
 
-License Terms
+Use of this software outside the organization, including public release or open-source distribution, requires explicit authorization from the copyright holder.
 
-This software is licensed for internal use only.
+## Internal Use Only
 
-Distribution, reproduction, or modification of this software outside the organization is strictly prohibited.
+For internal use within the organization, the following development credits may be included:
 
-Unauthorized use of this software is subject to legal action.
+Developed by:
 
-Disclaimer
+- [Doi Kazuto] (Lead Developer)
 
-THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND. KENSETSU SYSTEM Co.Ltd. DISCLAIMS ALL WARRANTIES, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+Note: If this software is distributed externally, developer names must be removed unless specific authorization is granted.
+
+THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND. THE COPYRIGHT HOLDER DISCLAIMS ALL WARRANTIES, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
