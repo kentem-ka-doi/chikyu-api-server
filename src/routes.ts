@@ -28,16 +28,40 @@ export const defineEndpoints = (app: Application): void => {
    *         content:
    *           application/json:
    *             schema:
-   *               type: array
-   *               items:
-   *                 type: object
-   *                 properties:
-   *                   id:
-   *                     type: integer
-   *                     description: 企業ID
-   *                   name:
-   *                     type: string
-   *                     description: 企業名
+   *               type: object
+   *               properties:
+   *                 total_count:
+   *                   type: integer
+   *                   description: 全体の企業数
+   *                 page_item_count:
+   *                   type: integer
+   *                   description: 現在のページに含まれる企業数
+   *                 page_index:
+   *                   type: integer
+   *                   description: 現在のページインデックス
+   *                 page_count:
+   *                   type: integer
+   *                   description: 全体のページ数
+   *                 start_index:
+   *                   type: integer
+   *                   description: 開始インデックス
+   *                 last_index:
+   *                   type: integer
+   *                   description: 終了インデックス
+   *                 is_last_page:
+   *                   type: boolean
+   *                   description: 最終ページであるかどうか
+   *                 list:
+   *                   type: array
+   *                   items:
+   *                     type: object
+   *                     properties:
+   *                       _id:
+   *                         type: integer
+   *                         description: 企業ID
+   *                       company_name:
+   *                         type: string
+   *                         description: 企業名
    *       500:
    *         $ref: '#/components/responses/UnauthorizedError'
    */
