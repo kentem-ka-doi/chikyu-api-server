@@ -61,8 +61,12 @@ chikyu-api-server-copy/
 例:
 
 ```
+COMPOSE_PROJECT_NAME=chikyu-api-server
+TOKEN_NAME="example-chikyu-api-server"
 PORT=3000
-DATABASE_URL=postgres://user:password@localhost:5432/dbname
+ORGANIZATION_ID=10561
+EMAIL=example@kentem.co.jp
+PASSWORD=example
 ```
 
 ## ソースコードの説明
