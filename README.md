@@ -19,7 +19,6 @@ chikyu-api-server/
 
 ## 必須ツール
 
-- Node.js (バージョン推奨: 22.x 以上)
 - Docker (推奨: 最新版)
 - Docker Compose (推奨: 最新版)
 
@@ -32,19 +31,13 @@ chikyu-api-server/
    cd chikyu-api-server
    ```
 
-2. 必要なパッケージをインストールします。
-
-   ```bash
-   npm install
-   ```
-
-3. Docker コンテナをビルドして起動します。
+2. Docker コンテナをビルドして起動します。
 
    ```bash
    docker-compose up --build
    ```
 
-4. サーバーが正常に起動したことを確認します。デフォルトでは `http://localhost:3000` にアクセス可能です。
+3. サーバーが正常に起動したことを確認します。デフォルトでは `http://localhost:3000` にアクセス可能です。
 
 ## スクリプト
 
