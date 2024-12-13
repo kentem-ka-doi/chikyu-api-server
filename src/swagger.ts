@@ -10,6 +10,21 @@ const swaggerOptions = {
       description: "API documentation for Chikyu API Server",
     },
     components: {
+      schemas: {
+        Company: {
+          type: "object",
+          properties: {
+            _id: {
+              type: "integer",
+              description: "企業ID",
+            },
+            company_name: {
+              type: "string",
+              description: "企業名",
+            },
+          },
+        },
+      },
       responses: {
         UnauthorizedError: {
           description: "サーバーエラー (不正なユーザー)",

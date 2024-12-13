@@ -54,14 +54,7 @@ export const defineEndpoints = (app: Application): void => {
    *                 list:
    *                   type: array
    *                   items:
-   *                     type: object
-   *                     properties:
-   *                       _id:
-   *                         type: integer
-   *                         description: 企業ID
-   *                       company_name:
-   *                         type: string
-   *                         description: 企業名
+   *                     $ref: '#/components/schemas/Company'
    *       500:
    *         $ref: '#/components/responses/UnauthorizedError'
    */
@@ -82,6 +75,31 @@ export const defineEndpoints = (app: Application): void => {
     companiesHandler("save")(updateParams("key"))
   );
 
+  /**
+   * @swagger
+   * /api/v1/companies/{kentem_id}:
+   *   get:
+   *     summary: Kentem ID をもとに企業を取得
+   *     description: Kentem ID に紐づく企業を返します。
+   *     parameters:
+   *       - in: path
+   *         name: kentem_id
+   *         required: true
+   *         description: 企業のKentem ID
+   *         schema:
+   *           type: string
+   *     responses:
+   *       200:
+   *         description: 正常に企業を取得
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/Company'
+   *       404:
+   *         description: 指定されたKentem ID の企業が見つかりません
+   *       500:
+   *         $ref: '#/components/responses/UnauthorizedError'
+   */
   app.get(
     "/api/v1/companies/:kentem_id",
     generateSingleHandler(companiesHandler, "kentem_id")
