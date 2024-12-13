@@ -36,16 +36,16 @@ Chikyu.session.hasSession = () =>
     Chikyu.session.data.credentials != null
   );
 
-const isTokenValid = (): boolean => {
-  if (!createSessionTokenResponse || !tokenExpiry) {
-    return false; // Invalid if no token or expiry / トークンまたは有効期限がない場合は無効
-  }
-  return Date.now() < tokenExpiry; // Check if current time is before expiry / 現在の時間が有効期限前か確認
-};
+/**
+ * Returns false if no token or expiry, otherwise check if current time is before expiry /
+ * トークンまたは有効期限がない場合は無効、現在の時間が有効期限前か確認
+ */
+const isTokenValid = (): boolean =>
+  !createSessionTokenResponse || !tokenExpiry
+    ? false
+    : Date.now() < tokenExpiry;
 
-const hasToken = (): boolean => {
-  return !!createSessionTokenResponse;
-};
+const hasToken = (): boolean => !!createSessionTokenResponse;
 
 // Creates a new token / トークンを新規作成
 const createToken = async () => {
