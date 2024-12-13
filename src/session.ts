@@ -27,15 +27,14 @@ const password = process.env.PASSWORD || "";
 const duration = Number(process.env.DURATION) || 86400;
 
 // Checks if the current session is still valid / セッションが有効かをチェック
-const isSessionValid = () => {
-  return (
+Chikyu.session.hasSession = () =>
+  !!(
     Chikyu.session != null &&
     Chikyu.session.data != null &&
     Chikyu.session.data.sessionId &&
     Chikyu.session.data.identityId &&
     Chikyu.session.data.credentials != null
   );
-};
 
 const isTokenValid = (): boolean => {
   if (!createSessionTokenResponse || !tokenExpiry) {
@@ -83,7 +82,7 @@ const renewToken = async () => {
 
 // Retrieves or creates a new session / セッションを取得または新規作成
 export const getSession = async () => {
-  if (isSessionValid()) {
+  if (Chikyu.session.hasSession()) {
     return chikyuSession; // Reuse the existing session / 既存のセッションを再利用
   }
 

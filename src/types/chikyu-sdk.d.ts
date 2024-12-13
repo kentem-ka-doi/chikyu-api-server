@@ -2,6 +2,7 @@ declare module "chikyu-sdk" {
   interface Session {
     login(tokenName: string, token: string, secretToken: string): Promise<void>;
     changeOrgan(organizationId: number): Promise<void>;
+    hasSession(): boolean;
     data: {
       identityId: string | null;
       sessionId: string | null;
